@@ -141,10 +141,10 @@ export GOOGLE_APPLICATION_CREDENTIALS="/path/to/key.json"
 
 ## 📝 Examples
 
-Check out the [examples](examples/) directory for more usage patterns:
+Check out the [examples](https://github.com/realcoding2003/vertex-ai-imagen/tree/master/examples) directory for more usage patterns:
 
-- [Basic Usage](examples/basic_usage.py) - Simple image generation
-- [Advanced Usage](examples/test_image_generation.py) - Complete feature demo
+- [Basic Usage](https://github.com/realcoding2003/vertex-ai-imagen/blob/master/examples/basic_usage.py) - Simple image generation
+- [Advanced Usage](https://github.com/realcoding2003/vertex-ai-imagen/blob/master/examples/test_image_generation.py) - Complete feature demo
 
 ### Jupyter Notebook
 
@@ -200,7 +200,7 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](https://github.com/realcoding2003/vertex-ai-imagen/blob/master/LICENSE) file for details.
 
 ## 🔗 Links
 
