@@ -4,9 +4,9 @@ Vertex AI Imagen 클라이언트 라이브러리
 간단하고 깔끔한 API로 Google Cloud Vertex AI Imagen 사용
 """
 
-__version__ = "1.1.3"
+__version__ = "1.1.4"
 __author__ = "Kevin Park"
-__email__ = "kevin@realcoding.co.kr"
+__email__ = "kevinpark1981@gmail.com"
 __description__ = "Simple and clean Python client for Google Cloud Vertex AI Imagen"
 
 from .client import ImagenClient
