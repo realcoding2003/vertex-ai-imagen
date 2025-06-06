@@ -1,0 +1,82 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "vertex-ai-imagen"
+version = "1.1.0"
+description = "Simple and clean Python client for Google Cloud Vertex AI Imagen"
+readme = "README.md"
+license = "MIT"
+authors = [
+    {name = "Kevin Park", email = "kevin@realcoding.co.kr"}
+]
+maintainers = [
+    {name = "Kevin Park", email = "kevin@realcoding.co.kr"}
+]
+keywords = [
+    "vertex-ai",
+    "imagen", 
+    "google-cloud",
+    "ai",
+    "image-generation",
+    "machine-learning"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Multimedia :: Graphics",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.31.0",
+    "google-auth>=2.23.0",
+    "google-auth-oauthlib>=1.1.0",
+    "google-auth-httplib2>=0.1.1",
+    "python-dotenv>=1.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-asyncio>=0.18.0",
+    "black>=21.0.0",
+    "flake8>=3.8.0",
+    "mypy>=0.910",
+    "coverage>=6.0",
+]
+jupyter = [
+    "ipython>=7.0",
+    "jupyter>=1.0",
+]
+
+[project.urls]
+Homepage = "https://github.com/realcoding2003/vertex-ai-imagen"
+Repository = "https://github.com/realcoding2003/vertex-ai-imagen"
+Issues = "https://github.com/realcoding2003/vertex-ai-imagen/issues"
+Documentation = "https://github.com/realcoding2003/vertex-ai-imagen/blob/main/README.md"
+
+[tool.setuptools]
+package-dir = {"" = "src"}
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.black]
+line-length = 88
+target-version = ["py38"]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
