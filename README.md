@@ -3,6 +3,8 @@
 [![PyPI version](https://badge.fury.io/py/vertex-ai-imagen.svg)](https://badge.fury.io/py/vertex-ai-imagen)
 [![Python 3.8+](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![Tests](https://github.com/realcoding2003/vertex-ai-imagen/workflows/🧪%20Tests%20and%20Quality%20Checks/badge.svg)](https://github.com/realcoding2003/vertex-ai-imagen/actions)
+[![PyPI Deploy](https://github.com/realcoding2003/vertex-ai-imagen/workflows/🚀%20Publish%20to%20PyPI/badge.svg)](https://github.com/realcoding2003/vertex-ai-imagen/actions)
 
 **Simple and clean Python client for Google Cloud Vertex AI Imagen**
 
