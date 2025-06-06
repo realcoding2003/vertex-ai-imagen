@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Vertex AI Imagen 실제 이미지 생성 테스트
+Vertex AI Imagen Real Image Generation Test
 """
 
 import asyncio
@@ -8,75 +8,74 @@ import os
 from pathlib import Path
 from vertex_ai_imagen import ImagenClient
 
-# .env 파일 로드
+# Load .env file
 try:
     from dotenv import load_dotenv
     load_dotenv()
 except ImportError:
-    print("⚠️  python-dotenv가 설치되지 않았습니다. pip install python-dotenv")
+    print("⚠️  python-dotenv is not installed. pip install python-dotenv")
 
-# 설정 (.env에서 우선 읽고, 없으면 기본값 사용)
-CREDENTIALS_PATH = os.getenv(
-    "GOOGLE_APPLICATION_CREDENTIALS", 
-    "/Users/kevinpark/Downloads/gen-lang-client-0205070035-411d73857186.json"
-)
-PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT", "gen-lang-client-0205070035")
+# Configuration (read from .env first, fallback to defaults)
+CREDENTIALS_PATH = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
+PROJECT_ID = os.getenv("GOOGLE_CLOUD_PROJECT")
 OUTPUT_DIR = os.getenv("OUTPUT_DIR", "../generated_images")
 LOCATION = os.getenv("VERTEX_AI_LOCATION", "us-central1")
 
 async def test_image_generation():
-    """이미지 생성 테스트"""
-    print("🎨 Vertex AI Imagen 테스트 시작\n")
+    """Image generation test"""
+    print("🎨 Starting Vertex AI Imagen test\n")
+    
+    # Check required environment variables
+    if not PROJECT_ID:
+        print("❌ Error: GOOGLE_CLOUD_PROJECT environment variable is required")
+        print("   Please set: export GOOGLE_CLOUD_PROJECT='your-project-id'")
+        return False
+    
+    if not CREDENTIALS_PATH:
+        print("❌ Error: GOOGLE_APPLICATION_CREDENTIALS environment variable is required")
+        print("   Please set: export GOOGLE_APPLICATION_CREDENTIALS='/path/to/service-account-key.json'")
+        return False
     
     try:
-        # 1. 클라이언트 초기화
-        print("📋 1. 클라이언트 초기화 중...")
+        # 1. Initialize client
+        print("📋 1. Initializing client...")
         client = ImagenClient(project_id=PROJECT_ID, location=LOCATION)
-        print(f"   ✅ 프로젝트 ID: {PROJECT_ID}")
-        print(f"   ✅ 리전: {LOCATION}")
+        print(f"   ✅ Project ID: {PROJECT_ID}")
+        print(f"   ✅ Location: {LOCATION}")
         
-        # 2. 인증 설정
-        print("🔐 2. GCP 인증 설정 중...")
-        print(f"   📁 인증 파일: {CREDENTIALS_PATH}")
+        # 2. Setup authentication
+        print("🔐 2. Setting up GCP authentication...")
+        print(f"   📁 Credentials file: {CREDENTIALS_PATH}")
         
-        # 환경 변수가 설정되어 있으면 환경 변수 인증 시도
-        if os.getenv("GOOGLE_APPLICATION_CREDENTIALS"):
-            try:
-                success = client.setup_credentials_from_env()
-                if success:
-                    print("   ✅ 환경 변수로 인증 성공!")
-                else:
-                    raise Exception("환경 변수 인증 실패")
-            except Exception as e:
-                print(f"   ⚠️  환경 변수 인증 실패: {e}")
-                print("   🔄 파일 인증으로 재시도...")
-                if not os.path.exists(CREDENTIALS_PATH):
-                    raise FileNotFoundError(f"인증 파일을 찾을 수 없습니다: {CREDENTIALS_PATH}")
-                success = client.setup_credentials(CREDENTIALS_PATH)
-                if success:
-                    print("   ✅ 파일로 인증 성공!")
-                else:
-                    raise Exception("파일 인증 실패")
-        else:
+        # Try environment variable authentication first
+        try:
+            success = client.setup_credentials_from_env()
+            if success:
+                print("   ✅ Environment variable authentication successful!")
+            else:
+                raise Exception("Environment variable authentication failed")
+        except Exception as e:
+            print(f"   ⚠️  Environment variable authentication failed: {e}")
+            print("   🔄 Retrying with file authentication...")
             if not os.path.exists(CREDENTIALS_PATH):
-                raise FileNotFoundError(f"인증 파일을 찾을 수 없습니다: {CREDENTIALS_PATH}")
+                raise FileNotFoundError(f"Credentials file not found: {CREDENTIALS_PATH}")
             success = client.setup_credentials(CREDENTIALS_PATH)
             if success:
-                print("   ✅ 파일로 인증 성공!")
+                print("   ✅ File authentication successful!")
             else:
-                raise Exception("파일 인증 실패")
+                raise Exception("File authentication failed")
         
-        # 3. 출력 디렉토리 생성
-        print("📁 3. 출력 디렉토리 생성...")
+        # 3. Create output directory
+        print("📁 3. Creating output directory...")
         Path(OUTPUT_DIR).mkdir(exist_ok=True)
-        print(f"   ✅ 디렉토리: {OUTPUT_DIR}")
+        print(f"   ✅ Directory: {OUTPUT_DIR}")
         
-        # 4. 간단한 이미지 생성 테스트
-        print("🎯 4. 이미지 생성 테스트...")
+        # 4. Simple image generation test
+        print("🎯 4. Image generation test...")
         prompt = "A beautiful sunset over the ocean with waves"
-        print(f"   📝 프롬프트: {prompt}")
+        print(f"   📝 Prompt: {prompt}")
         
-        print("   ⏳ 이미지 생성 중... (시간이 걸릴 수 있습니다)")
+        print("   ⏳ Generating image... (this may take a while)")
         
         image = await client.generate(
             prompt=prompt,
@@ -85,43 +84,43 @@ async def test_image_generation():
             count=1
         )
         
-        print("   ✅ 이미지 생성 완료!")
+        print("   ✅ Image generation completed!")
         
-        # 5. 이미지 저장
-        print("💾 5. 이미지 저장...")
+        # 5. Save image
+        print("💾 5. Saving image...")
         filename = f"{OUTPUT_DIR}/test_sunset.png"
         image.save(filename)
         
-        print(f"   ✅ 저장 완료: {filename}")
-        print(f"   📊 파일 크기: {image.size:,} bytes")
+        print(f"   ✅ Save completed: {filename}")
+        print(f"   📊 File size: {image.size:,} bytes")
         if image.enhanced_prompt != image.prompt:
-            print(f"   ✨ 개선된 프롬프트: {image.enhanced_prompt}")
+            print(f"   ✨ Enhanced prompt: {image.enhanced_prompt}")
         
-        # 6. 다중 이미지 생성 테스트
-        print("\n🎨 6. 다중 이미지 생성 테스트...")
+        # 6. Multiple image generation test
+        print("\n🎨 6. Multiple image generation test...")
         prompt2 = "A cute cat playing with a ball"
-        print(f"   📝 프롬프트: {prompt2}")
+        print(f"   📝 Prompt: {prompt2}")
         
         images = await client.generate(
             prompt=prompt2,
-            model="imagen-3.0-fast-generate-001",  # 빠른 모델 사용
+            model="imagen-3.0-fast-generate-001",  # Use fast model
             aspect_ratio="1:1",
             count=2
         )
         
-        print(f"   ✅ {len(images)}개 이미지 생성 완료!")
+        print(f"   ✅ Generated {len(images)} images successfully!")
         
-        # 7. 이미지들 저장
+        # 7. Save images
         for i, img in enumerate(images):
             filename = f"{OUTPUT_DIR}/test_cat_{i+1}.png"
             img.save(filename)
-            print(f"   💾 저장: {filename} ({img.size:,} bytes)")
+            print(f"   💾 Saved: {filename} ({img.size:,} bytes)")
         
-        print("\n🎉 모든 테스트 완료!")
-        print(f"📁 생성된 파일들을 확인하세요: {OUTPUT_DIR}/")
+        print("\n🎉 All tests completed!")
+        print(f"📁 Check generated files at: {OUTPUT_DIR}/")
         
-        # 8. 지원 모델 목록 출력
-        print("\n📋 지원되는 모델 목록:")
+        # 8. List supported models
+        print("\n📋 Supported models:")
         models = client.list_models()
         for model in models:
             print(f"   • {model}")
@@ -129,19 +128,19 @@ async def test_image_generation():
         return True
         
     except Exception as e:
-        print(f"❌ 오류 발생: {e}")
+        print(f"❌ Error occurred: {e}")
         import traceback
         traceback.print_exc()
         return False
 
 async def main():
-    """메인 함수"""
+    """Main function"""
     success = await test_image_generation()
     
     if success:
-        print("\n✅ 테스트 성공! 패키지가 정상적으로 작동합니다.")
+        print("\n✅ Test successful! Package is working correctly.")
     else:
-        print("\n❌ 테스트 실패!")
+        print("\n❌ Test failed!")
     
     return success
 

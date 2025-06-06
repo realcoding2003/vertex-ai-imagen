@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """
-기본 사용 예제
+Basic Usage Example
 
-간단한 이미지 생성 방법을 보여줍니다.
+Demonstrates simple image generation methods.
 """
 
 import asyncio
@@ -10,50 +10,50 @@ import os
 from vertex_ai_imagen import ImagenClient
 
 async def main():
-    """기본 사용 예제"""
+    """Basic usage example"""
     
-    # 환경 변수 확인
+    # Check environment variables
     project_id = os.getenv("GOOGLE_CLOUD_PROJECT")
     credentials_path = os.getenv("GOOGLE_APPLICATION_CREDENTIALS")
     
     if not project_id or not credentials_path:
-        print("❌ 환경 변수를 설정해주세요:")
+        print("❌ Please set environment variables:")
         print("export GOOGLE_CLOUD_PROJECT='your-project-id'")
         print("export GOOGLE_APPLICATION_CREDENTIALS='/path/to/key.json'")
         return
     
-    # 클라이언트 초기화
-    print("🔧 클라이언트 초기화 중...")
+    # Initialize client
+    print("🔧 Initializing client...")
     client = ImagenClient(project_id)
     
-    # 인증 설정
+    # Setup authentication
     try:
         client.setup_credentials_from_env()
-        print("✅ 인증 성공")
+        print("✅ Authentication successful")
     except Exception as e:
-        print(f"❌ 인증 실패: {e}")
+        print(f"❌ Authentication failed: {e}")
         return
     
-    # 간단한 이미지 생성
-    print("🎨 이미지 생성 중...")
+    # Generate simple image
+    print("🎨 Generating image...")
     try:
         image = await client.generate(
             prompt="A beautiful sunset over the ocean",
             aspect_ratio="16:9"
         )
         
-        # 이미지 저장
+        # Save image
         image.save("sunset.png")
-        print(f"✅ 이미지 저장 완료!")
-        print(f"   파일: sunset.png")
-        print(f"   크기: {image.size:,} bytes")
-        print(f"   프롬프트: {image.prompt}")
+        print(f"✅ Image saved successfully!")
+        print(f"   File: sunset.png")
+        print(f"   Size: {image.size:,} bytes")
+        print(f"   Prompt: {image.prompt}")
         
         if image.enhanced_prompt != image.prompt:
-            print(f"   개선된 프롬프트: {image.enhanced_prompt}")
+            print(f"   Enhanced prompt: {image.enhanced_prompt}")
         
     except Exception as e:
-        print(f"❌ 이미지 생성 실패: {e}")
+        print(f"❌ Image generation failed: {e}")
 
 if __name__ == "__main__":
     asyncio.run(main())
