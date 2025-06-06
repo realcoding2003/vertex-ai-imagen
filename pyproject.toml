@@ -9,10 +9,10 @@ description = "Simple and clean Python client for Google Cloud Vertex AI Imagen"
 readme = "README.md"
 license = {text = "MIT"}
 authors = [
-    {name = "Kevin Park", email = "kevin@realcoding.co.kr"}
+    {name = "Kevin Park", email = "kevinpark1981@gmail.com"}
 ]
 maintainers = [
-    {name = "Kevin Park", email = "kevin@realcoding.co.kr"}
+    {name = "Kevin Park", email = "kevinpark1981@gmail.com"}
 ]
 keywords = [
     "vertex-ai",
